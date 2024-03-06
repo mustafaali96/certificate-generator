@@ -20,7 +20,7 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
     return href
 
 def annotate(name):
-    path = "images\\KAI-MEETUP-ATTEND-SHARE.jpg"
+    path = "./images/KAI-MEETUP-ATTEND-SHARE.jpg"
     
     certi = cv2.imread(path)
     if len(name)<=5:
