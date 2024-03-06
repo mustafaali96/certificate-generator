@@ -9,8 +9,7 @@ from PIL import Image, ImageDraw
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-font = cv2.FONT_HERSHEY_SIMPLEX
-fontScale = 1.6
+font = cv2.FONT_HERSHEY_TRIPLEX
 
 def get_binary_file_downloader_html(bin_file, file_label='File'):
     with open(bin_file, 'rb') as f:
@@ -23,12 +22,13 @@ def annotate(name):
     path = "./images/KAI-MEETUP-ATTEND-SHARE.jpg"
     
     certi = cv2.imread(path)
-    if len(name)<=5:
-        original = cv2.putText(certi, name, (1290, 490),font, fontScale, (0, 0, 0), thickness=3)
-    elif len(name)<10:
-        original = cv2.putText(certi, name, (1230, 490),font, fontScale, (0, 0, 0), thickness=3)
-    elif len(name)<20:
-        original = cv2.putText(certi, name, (1130, 490),font, 1.2, (0, 0, 0), thickness=3) 
+    if len(name) < 10:
+        x = 1310 - (len(name) * 10)
+        fontScale = 1.5
+    else:
+        x = 1310 - (len(name) * 11)
+        fontScale = 1.3
+    original = cv2.putText(certi, name, (x, 490),font, fontScale, (0, 0, 0), thickness=2)
     
     cv2.imwrite("Certificate.jpg",original)
 
@@ -37,7 +37,7 @@ def annotate(name):
         st.markdown(get_binary_file_downloader_html('Certificate.jpg', 'Certificate'), unsafe_allow_html=True)
 
 st.title("Get Your Certificate")
-name=st.text_input('Enter your name')
+name=st.text_input('Enter your name').title()
 if len(name)>0 and len(name)<=17:
     annotate(name)
 elif len(name)>17:
